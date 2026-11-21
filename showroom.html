@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SunForge · Hersteller</title>
+<meta name="description" content="SunForge Hersteller-Verzeichnis: BIPV-Paletten von Dachziegel bis begehbarem PV-Glas – Serien, Massbereiche, Optionen.">
+<script>/* Theme vor dem ersten Rendern setzen (kein Aufblitzen) */
+try{var t=localStorage.getItem('sf-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F5F0; --bg2:#EFECE4; --ink:#211F1A; --muted:#5D5A50; --faint:#6B675C;
+    --line:#DAD5C8; --sun:#8A5E06; --sun-bg:#E9A83C; --ok:#3E7A3E; --warn:#8A5E06;
+  }
+  :root[data-theme="dark"]{
+    --bg:#141613; --bg2:#1B1E1A; --ink:#EDEAE2; --muted:#A6A294; --faint:#8C887B;
+    --line:#2E312B; --sun:#E0A440; --sun-bg:#E9A83C; --ok:#8DC08D; --warn:#E0A440;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141613; --bg2:#1B1E1A; --ink:#EDEAE2; --muted:#A6A294; --faint:#8C887B;
+      --line:#2E312B; --sun:#E0A440; --sun-bg:#E9A83C; --ok:#8DC08D; --warn:#E0A440;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;font-size:16px;line-height:1.55}
+  a{color:inherit}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+  header{display:flex;align-items:center;gap:16px;padding:20px 24px;flex-wrap:wrap}
+  .wordmark{font-weight:600;letter-spacing:.14em;font-size:14px;text-decoration:none}
+  .wordmark b{color:var(--sun)}
+  header .right{margin-left:auto;display:flex;gap:12px;align-items:center}
+  .navlink{font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted)}
+  .navlink:hover{color:var(--ink)}
+  .theme{color:var(--muted);font-size:15px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;line-height:1;background:none;font-family:inherit;cursor:pointer}
+
+  .kopf{padding:44px 0 30px}
+  .tag{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+  .tag i{font-style:normal;color:var(--sun);margin-right:10px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(30px,4.2vw,48px);line-height:1.1;letter-spacing:-.01em}
+  .kopf p{color:var(--muted);max-width:60ch;margin-top:14px}
+
+  /* Verzeichnis */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding-bottom:70px}
+  .hcard{
+    background:none;border:1px solid var(--line);border-radius:16px;padding:22px 24px;
+    text-align:left;cursor:pointer;font-family:inherit;color:inherit;
+    display:flex;flex-direction:column;gap:10px;transition:border-color .15s;
+  }
+  .hcard:hover{border-color:var(--ink)}
+  .hcard .hname{font-family:'Fraunces',Georgia,serif;font-size:22px;font-weight:400}
+  .hcard .land{color:var(--faint);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase}
+  .hcard p{color:var(--muted);font-size:14px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .chip.hot{color:var(--sun);border-color:var(--sun)}
+  .chip.warn{color:var(--warn);border-style:dashed}
+
+  /* Detail */
+  .back{color:var(--muted);font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:6px 0 20px;display:inline-block;cursor:pointer;background:none;border:none;font-family:inherit}
+  .verif{border-left:3px solid var(--warn);background:var(--bg2);border-radius:0 10px 10px 0;padding:12px 16px;font-size:13.5px;color:var(--muted);margin:18px 0 8px;max-width:72ch}
+  .serie{border-top:1px solid var(--line);padding:30px 0}
+  .serie:last-child{border-bottom:1px solid var(--line);margin-bottom:60px}
+  .serie .kopfzeile{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+  .serie h3{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:24px}
+  .badge{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;padding:4px 12px;border:1px solid var(--line);color:var(--muted)}
+  .badge.mass{border-color:var(--sun);color:var(--sun)}
+  dl{display:grid;grid-template-columns:minmax(140px,210px) 1fr;gap:7px 20px;font-size:14.5px;margin:14px 0 0}
+  dt{color:var(--faint)}
+  dd{color:var(--ink)}
+  @media(max-width:560px){dl{grid-template-columns:1fr}dt{margin-top:6px}}
+
+  /* Mass-Check */
+  .masscheck{margin-top:18px;padding:16px 18px;border:1px dashed var(--line);border-radius:12px;max-width:560px}
+  .masscheck .t{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+  .masscheck .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .masscheck input{
+    width:110px;font-family:inherit;font-size:15px;color:var(--ink);background:var(--bg2);
+    border:1px solid var(--line);border-radius:8px;padding:9px 12px;
+  }
+  .masscheck input:focus-visible{outline:2px solid var(--sun-bg);outline-offset:1px}
+  .masscheck .res{font-size:14px;margin-top:10px;min-height:1.4em}
+  .masscheck .res.ok{color:var(--ok)}
+  .masscheck .res.nein{color:var(--warn)}
+  .srcnote{color:var(--faint);font-size:12.5px;margin-top:14px}
+
+  footer{border-top:1px solid var(--line);color:var(--faint);font-size:12.5px;padding:26px 24px 36px;text-align:center;line-height:1.8}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wordmark" href="index.html">SUN<b>FORGE</b></a>
+  <div class="right">
+    <a class="navlink" href="konfigurator.html">Konfigurator</a>
+    <button class="theme" id="themeBtn" aria-label="Design umschalten">◐</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="verzeichnis">
+    <div class="kopf">
+      <span class="tag"><i>Showroom</i>Hersteller — Manufacturers</span>
+      <h1>Die Paletten der Solararchitektur.</h1>
+      <p>Von Dachziegeln über farbige Fassaden bis zu begehbarem PV-Glas: die Sortimente der Hersteller, strukturiert nach Serien, Anwendungen und Gestaltungsspielraum. Angaben aus öffentlichen Herstellerunterlagen; Verifizierung durch die Hersteller läuft.</p>
+    </div>
+    <div class="grid" id="hgrid"></div>
+  </div>
+
+  <div id="detail" class="hidden">
+    <div class="kopf" style="padding-bottom:12px">
+      <button class="back" id="backBtn">← Alle Hersteller</button>
+      <span class="tag" id="d-land"></span>
+      <h1 id="d-name"></h1>
+      <p id="d-profil"></p>
+      <div class="verif" id="d-verif"></div>
+    </div>
+    <div id="d-serien"></div>
+  </div>
+</div>
+
+<footer>SunForge Beta · Angaben aus öffentlichen Herstellerunterlagen, ohne Gewähr · Keine Planungs-, Statik- oder Preisaussage</footer>
+
+<script src="data.js"></script>
+<script>
+(function(){
+"use strict";
+
+function esc(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+
+var ANW = {dach_aufdach:"Aufdach", dach_indach:"Indach", dachziegel:"Dachziegel", flachdach:"Flachdach",
+  fassade_hinterlueftet:"Fassade hinterlüftet", fassade_isolierend:"Fassade isolierend", curtain_wall:"Curtain Wall",
+  skylight:"Skylight", ueberdachung:"Überdachung", gelaender:"Geländer", boden_begehbar:"Begehbares Glas",
+  laermschutz:"Lärmschutz", sonnenschutz:"Sonnenschutz"};
+var AUSG = {standard:"Standard", parametrisch:"Massanfertigung", beides:"Standard + Mass"};
+var EIND = {ziegel:"Ziegel", eternit:"Eternit", blech_trapez:"Trapezblech", blech_falz:"Falzblech",
+  folie:"Folie", kies:"Kies", biberschwanz:"Biberschwanz", schiefer:"Schiefer", gruendach:"Gründach"};
+var PTYP = {modul:"Module", unterkonstruktion:"Unterkonstruktion", absturzsicherung:"Absturzsicherung"};
+
+var PALETTEN = (window.SUNFORGE_DATA && window.SUNFORGE_DATA.paletten) || [];
+var verz = document.getElementById('verzeichnis'), det = document.getElementById('detail');
+
+function anwSet(p){
+  var s = [];
+  p.serien.forEach(function(se){ (se.anwendungen||[]).forEach(function(a){ if(s.indexOf(a)<0) s.push(a); }); });
+  return s;
+}
+
+function renderVerzeichnis(){
+  document.getElementById('hgrid').innerHTML = PALETTEN.map(function(p){
+    var h = p.hersteller;
+    return '<button class="hcard" data-slug="'+esc(p.slug)+'">'
+      + '<span class="land">'+esc(h.land||'')+(h.verifiziert===false?' · unverifiziert':'')+'</span>'
+      + '<span class="hname">'+esc(h.name)+'</span>'
+      + '<p>'+esc(h.profil||'')+'</p>'
+      + '<span class="chips">'
+      + '<span class="chip hot">'+p.serien.length+(p.serien.length===1?' Serie':' Serien')+'</span>'
+      + (function(){var t=p.serien.map(function(s){return s.produkttyp;}).filter(function(v,i,a){return a.indexOf(v)===i;});return (t.length===1&&t[0]==='modul')?'':t.map(function(x){return '<span class="chip">'+esc(PTYP[x]||x)+'</span>';}).join('');})()
+      + anwSet(p).slice(0,4).map(function(a){return '<span class="chip">'+esc(ANW[a]||a)+'</span>';}).join('')
+      + '</span></button>';
+  }).join('');
+  document.querySelectorAll('.hcard').forEach(function(el){
+    el.addEventListener('click', function(){ location.hash = el.dataset.slug; });
+  });
+}
+
+function bereich(b, einheit){
+  return (Array.isArray(b)&&b.length===2) ? esc(b[0])+'–'+esc(b[1])+' '+esc(einheit||'') : null;
+}
+
+function serieHtml(se, idx){
+  var par = se.parameter||{}, opt = se.optionen||{}, rw = se.richtwerte||{};
+  var zeilen = [];
+  function z(dt, dd){ if(dd) zeilen.push('<dt>'+dt+'</dt><dd>'+dd+'</dd>'); }
+  z('Anwendungen', (se.anwendungen||[]).map(function(a){return esc(ANW[a]||a);}).join(', '));
+  z('Masse', (bereich(par.breite_mm,'mm') && bereich(par.hoehe_mm,'mm'))
+      ? 'Breite '+bereich(par.breite_mm,'mm')+' · Höhe '+bereich(par.hoehe_mm,'mm') : null);
+  z('Formen', (par.formen||[]).map(esc).join(', '));
+  z('Aufbauten', (par.aufbauten||[]).map(esc).join(', '));
+  z('Zelltypen', (par.zelltypen||[]).map(esc).join(', '));
+  z('Eindeckungen', (se.eindeckungen||[]).map(function(e){return esc(EIND[e]||e);}).join(', '));
+  z('Klemmbereich', bereich(par.rahmenhoehe_mm,'mm') ? bereich(par.rahmenhoehe_mm,'mm')+' Modulrahmenhöhe' : null);
+  z('Planungstool', se.planungstool ? esc(se.planungstool) : null);
+  if (opt.farben) z('Farben', esc(opt.farben.technologie||'') + (opt.farben.frei ? ' · frei wählbar' : '') +
+      ((opt.farben.werte||[]).length ? ' · ' + opt.farben.werte.map(esc).join(', ') : ''));
+  z('Oberflächen', (opt.oberflaechen||[]).map(esc).join(', '));
+  z('Transluzenz', bereich(opt.transluzenz_pct,'%'));
+  z('Druck', opt.druck ? esc(opt.druck) : null);
+  z('Richtwert Leistung', bereich(rw.wp_pro_m2,'Wp/m²') ? bereich(rw.wp_pro_m2,'Wp/m²')+' (kuratiert, unverbindlich)' : null);
+  z('Richtpreisband', bereich(rw.preisband_chf_m2,'CHF/m²') ? bereich(rw.preisband_chf_m2,'CHF/m²')+' Material (kuratiert, unverbindlich)' : null);
+  z('Zertifikate', (se.zertifikate||[]).map(esc).join(', '));
+
+  var mc = '';
+  if (bereich(par.breite_mm,'') && bereich(par.hoehe_mm,'')) {
+    mc = '<div class="masscheck" data-bmin="'+par.breite_mm[0]+'" data-bmax="'+par.breite_mm[1]+'" data-hmin="'+par.hoehe_mm[0]+'" data-hmax="'+par.hoehe_mm[1]+'">'
+       + '<div class="t">Mass-Check — ist Ihr Format machbar?</div>'
+       + '<div class="row"><input type="text" inputmode="numeric" placeholder="Breite mm" aria-label="Breite in mm" class="mc-b">'
+       + '<span style="color:var(--faint)">×</span>'
+       + '<input type="text" inputmode="numeric" placeholder="Höhe mm" aria-label="Höhe in mm" class="mc-h"></div>'
+       + '<div class="res" aria-live="polite"></div></div>';
+  }
+
+  return '<div class="serie">'
+    + '<div class="kopfzeile"><h3>'+esc(se.name)+'</h3>'
+    + '<span class="badge'+(se.ausgestaltung!=='standard'?' mass':'')+'">'+esc(AUSG[se.ausgestaltung]||se.ausgestaltung)+'</span></div>'
+    + '<dl>'+zeilen.join('')+'</dl>'
+    + mc
+    + (se._quelle ? '<p class="srcnote">Quelle: '+esc(se._quelle)+'</p>' : '')
+    + '</div>';
+}
+
+function renderDetail(slug){
+  var p = PALETTEN.find(function(x){return x.slug===slug;});
+  if(!p){ location.hash=''; return; }
+  var h = p.hersteller;
+  document.getElementById('d-land').innerHTML = '<i>'+esc(h.land||'—')+'</i>'+esc(p.serien.length)+' Serien';
+  document.getElementById('d-name').textContent = h.name;
+  document.getElementById('d-profil').textContent = h.profil||'';
+  var v = document.getElementById('d-verif');
+  if (h.verifiziert === false) {
+    v.innerHTML = 'Angaben aus öffentlichen Herstellerunterlagen, vom Hersteller noch nicht verifiziert. '
+      + 'Sie vertreten <b>'+esc(h.name)+'</b>? <a href="hersteller.html">Daten prüfen und ergänzen</a>.';
+    v.classList.remove('hidden');
+  } else v.classList.add('hidden');
+  document.getElementById('d-serien').innerHTML = p.serien.map(serieHtml).join('');
+
+  // Mass-Checks verdrahten
+  document.querySelectorAll('.masscheck').forEach(function(box){
+    var res = box.querySelector('.res');
+    function check(){
+      var b = parseFloat(box.querySelector('.mc-b').value.replace(',','.'));
+      var hh = parseFloat(box.querySelector('.mc-h').value.replace(',','.'));
+      if (!isFinite(b) || !isFinite(hh)) { res.textContent=''; res.className='res'; return; }
+      var ok = b>=+box.dataset.bmin && b<=+box.dataset.bmax && hh>=+box.dataset.hmin && hh<=+box.dataset.hmax;
+      var okQ = (hh>=+box.dataset.bmin && hh<=+box.dataset.bmax && b>=+box.dataset.hmin && b<=+box.dataset.hmax);
+      if (ok || okQ) { res.textContent = '✓ Im Fertigungsbereich' + (!ok && okQ ? ' (gedreht)' : '') + ' — Angabe ohne Gewähr, massgeblich ist der Hersteller.'; res.className='res ok'; }
+      else { res.textContent = 'Ausserhalb des publizierten Bereichs — Sonderlösung direkt beim Hersteller anfragen.'; res.className='res nein'; }
+    }
+    box.querySelectorAll('input').forEach(function(i){ i.addEventListener('input', check); });
+  });
+
+  verz.classList.add('hidden'); det.classList.remove('hidden');
+  window.scrollTo({top:0});
+}
+
+function route(){
+  var slug = location.hash.replace('#','');
+  if (slug) renderDetail(slug);
+  else { det.classList.add('hidden'); verz.classList.remove('hidden'); }
+}
+document.getElementById('backBtn').addEventListener('click', function(){ location.hash=''; });
+window.addEventListener('hashchange', route);
+
+renderVerzeichnis();
+route();
+})();
+
+/* Hell/Dunkel: Standard = Systemeinstellung, Umschalter merkt die Wahl */
+(function(){
+  const root = document.documentElement, btn = document.getElementById('themeBtn');
+  const mq = window.matchMedia('(prefers-color-scheme: light)');
+  function istDunkel(){ return root.dataset.theme ? root.dataset.theme === 'dark' : !mq.matches; }
+  function beschrifte(){
+    if(!btn) return;
+    btn.textContent = istDunkel() ? '☀' : '☾';
+    btn.setAttribute('aria-label', istDunkel() ? 'Helles Design aktivieren' : 'Dunkles Design aktivieren');
+  }
+  if(btn) btn.addEventListener('click', function(){
+    const neu = istDunkel() ? 'light' : 'dark';
+    root.dataset.theme = neu;
+    try { localStorage.setItem('sf-theme', neu); } catch(e) {}
+    beschrifte();
+  });
+  if (mq.addEventListener) mq.addEventListener('change', beschrifte);
+  beschrifte();
+})();
+</script>
+</body>
+</html>

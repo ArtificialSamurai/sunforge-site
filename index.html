@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SunForge · Solararchitektur</title>
+<meta name="description" content="SunForge – Solararchitektur konfigurieren: Module und Unterkonstruktionen aus referenzierten Hersteller-Datenblättern, Kompatibilität nach hinterlegten Kriterien geprüft.">
+<script>/* Theme vor dem ersten Rendern setzen (kein Aufblitzen) */
+try{var t=localStorage.getItem('sf-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ---------------------------------------------------------------
+     SunForge Landing — editorial, ruhig, bildgeführt.
+     Hell ist die Leitstimmung; Dunkel folgt derselben Haltung.
+     --------------------------------------------------------------- */
+  :root{
+    --bg:#F7F5F0; --bg2:#EFECE4; --ink:#211F1A; --muted:#5D5A50; --faint:#6B675C;
+    --line:#DAD5C8; --sun:#8A5E06; --sun-bg:#E9A83C;
+    --glass:#181B1F; --glass2:#21262C; --terra:#9C5638; --moss:#5C7050;
+  }
+  :root[data-theme="dark"]{
+    --bg:#141613; --bg2:#1B1E1A; --ink:#EDEAE2; --muted:#A6A294; --faint:#8C887B;
+    --line:#2E312B; --sun:#E0A440; --sun-bg:#E9A83C;
+    --glass:#101317; --glass2:#1A1F25; --terra:#9C5638; --moss:#5C7050;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141613; --bg2:#1B1E1A; --ink:#EDEAE2; --muted:#A6A294; --faint:#8C887B;
+      --line:#2E312B; --sun:#E0A440; --sun-bg:#E9A83C;
+      --glass:#101317; --glass2:#1A1F25; --terra:#9C5638; --moss:#5C7050;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif; font-size:17px; line-height:1.6;
+  }
+  a{color:inherit}
+  .serif{font-family:'Fraunces',Georgia,serif;font-weight:400}
+
+  /* ---------- Rahmen ---------- */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  header{
+    position:fixed;inset:0 0 auto 0;z-index:30;
+    display:flex;align-items:center;gap:18px;
+    padding:20px 28px;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(8px);
+  }
+  .wordmark{font-weight:600;letter-spacing:.14em;font-size:14px;text-decoration:none}
+  .wordmark b{color:var(--sun);font-weight:600}
+  header .right{margin-left:auto;display:flex;gap:14px;align-items:center}
+  .navlink{font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted);padding:8px 2px;border-bottom:1px solid transparent}
+  .navlink:hover{color:var(--ink);border-color:var(--ink)}
+  .theme{color:var(--muted);font-size:15px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;line-height:1;background:none;font-family:inherit;cursor:pointer}
+  .theme:active{background:var(--bg2)}
+
+  /* ---------- Etiketten (zweisprachig, Cielia-artig) ---------- */
+  .tag{
+    display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:22px;
+  }
+  .tag i{font-style:normal;color:var(--sun);margin-right:10px}
+
+  /* ---------- Hero ---------- */
+  .hero{min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:0;position:relative}
+  .hero .wrap{padding-top:140px;padding-bottom:64px}
+  .hero h1{
+    font-family:'Fraunces',Georgia,serif;font-weight:300;
+    font-size:clamp(40px,6.4vw,84px);line-height:1.06;letter-spacing:-.015em;
+    max-width:13ch;
+  }
+  .hero h1 em{font-style:italic;font-weight:400}
+  .hero .lede{color:var(--muted);max-width:46ch;margin-top:26px;font-size:17.5px}
+  .hero .cta-row{display:flex;gap:26px;align-items:center;margin-top:38px;flex-wrap:wrap}
+  .cta{
+    display:inline-block;background:var(--ink);color:var(--bg);
+    font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    text-decoration:none;padding:16px 30px;border-radius:999px;
+  }
+  .cta:hover{background:var(--sun)}
+  :root[data-theme="dark"] .cta:hover, .cta:active{background:var(--sun-bg);color:#231A05}
+  .quiet{font-size:13px;color:var(--faint)}
+  .scrollcue{
+    position:absolute;right:30px;bottom:26px;color:var(--faint);
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    writing-mode:vertical-rl;
+  }
+
+  /* ---------- Fassaden-Bänder (Bildersatz, deterministisch) ---------- */
+  .band{display:block;width:100%;border:0}
+  .band .grid{display:grid;gap:3px;width:100%}
+  .band .grid i{display:block;background:var(--glass2)}
+  .band figcaption{
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);
+    padding:14px 28px 0;max-width:1180px;margin:0 auto;
+  }
+
+  /* ---------- Abschnitte ---------- */
+  section{padding:110px 0}
+  section.tight{padding:84px 0}
+  h2{
+    font-family:'Fraunces',Georgia,serif;font-weight:300;
+    font-size:clamp(30px,3.6vw,46px);line-height:1.15;letter-spacing:-.01em;
+    max-width:22ch;margin-bottom:28px;
+  }
+  .prose{color:var(--muted);max-width:56ch}
+  .prose p+p{margin-top:16px}
+  .duo{display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:64px;align-items:start}
+  @media(max-width:860px){.duo{grid-template-columns:1fr;gap:28px}}
+
+  /* Editoriale Liste statt Karten */
+  .ledger{border-top:1px solid var(--line);margin-top:14px}
+  .ledger .row{
+    display:grid;grid-template-columns:minmax(180px,260px) 1fr;gap:28px;
+    padding:30px 0;border-bottom:1px solid var(--line);
+  }
+  @media(max-width:680px){.ledger .row{grid-template-columns:1fr;gap:8px}}
+  .ledger h3{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:21px;line-height:1.3}
+  .ledger p{color:var(--muted);font-size:15.5px;max-width:58ch}
+
+  /* ---------- Schluss ---------- */
+  .fin{text-align:center;padding:130px 0 120px}
+  .fin h2{margin:0 auto 18px;max-width:18ch}
+  .fin .quiet{display:block;margin-top:22px}
+
+  footer{border-top:1px solid var(--line);color:var(--faint);font-size:12.5px;line-height:1.8;padding:30px 0 40px}
+  footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+  /* ---------- Sanftes Erscheinen ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wordmark" href="index.html">SUN<b>FORGE</b></a>
+  <div class="right">
+    <a class="navlink" href="showroom.html" data-i18n="nav.hersteller">Hersteller</a>
+    <a class="navlink" href="konfigurator.html" data-i18n="nav.konfigurator">Konfigurator</a>
+    <select class="theme" id="langSel" aria-label="Sprache / Language"><option value="de">DE</option><option value="en">EN</option><option value="fr">FR</option><option value="it">IT</option></select>
+    <button class="theme" id="themeBtn" aria-label="Design umschalten">◐</button>
+  </div>
+</header>
+
+<!-- ———————————————————————— Hero ———————————————————————— -->
+<div class="hero">
+  <div class="wrap">
+    <span class="tag reveal" data-i18n="hero.tag"><i>Beta</i>Solararchitektur — Built to Configure</span>
+    <h1 class="reveal" data-i18n="hero.h1">Architektur,<br>die Strom <em>denkt.</em></h1>
+    <p class="lede reveal" data-i18n="hero.lede">SunForge führt Architektinnen, Bauherren und Interessierte durch Module und Unterkonstruktionen – mit technischen Werten aus referenzierten Hersteller-Datenblättern und Kompatibilitätsprüfung nach hinterlegten Kriterien.</p>
+    <div class="cta-row reveal">
+      <a class="cta" href="konfigurator.html" data-i18n="hero.cta">Konfigurator starten</a>
+      <span class="quiet" data-i18n="hero.quiet">Kostenlos, ohne Anmeldung</span>
+    </div>
+  </div>
+  <span class="scrollcue" aria-hidden="true">Scroll</span>
+</div>
+
+<!-- Band 1: Fassade -->
+<figure class="band" aria-hidden="true">
+  <div class="grid" id="band1"></div>
+  <figcaption data-i18n="band1.cap">Fassade — vertikale Teilung, akzentuierte Felder</figcaption>
+</figure>
+
+<!-- ———————————————————————— 01 ———————————————————————— -->
+<section>
+  <div class="wrap duo">
+    <div>
+      <span class="tag reveal" data-i18n="s1.tag"><i>01</i>Das Werkzeug — The Tool</span>
+      <h2 class="reveal" data-i18n="s1.h2">Zwei Wege, ein stimmiges Ganzes.</h2>
+    </div>
+    <div class="prose reveal">
+      <p data-i18n="s1.p1">Vom Produkt her: Design, Leistung, Optik – geführt zum passenden Modul. Oder vom Gebäude her: Dachtyp und Eindeckung bestimmen, welche Systeme freigegeben sind.</p>
+      <p data-i18n="s1.p2">Prioritäten gewichten statt ausschliessen. Technisch Passendes bleibt sichtbar; die Zusammenfassung zeigt die gewählte Kombination, geprüft nach den hinterlegten Kriterien.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Band 2: Dach -->
+<figure class="band" aria-hidden="true">
+  <div class="grid" id="band2"></div>
+  <figcaption data-i18n="band2.cap">Dachfläche — liegendes Raster, durchgehende Belegung</figcaption>
+</figure>
+
+<!-- ———————————————————————— 02 ———————————————————————— -->
+<section>
+  <div class="wrap">
+    <span class="tag reveal" data-i18n="s2.tag"><i>02</i>Die Daten — The Data</span>
+    <h2 class="reveal" data-i18n="s2.h2">Daten statt Prospekte.</h2>
+    <div class="ledger reveal">
+      <div class="row">
+        <h3 data-i18n="s2.r1h">Referenzierte Werte</h3>
+        <p data-i18n="s2.r1p">Technische Produktwerte stammen aus Hersteller-Datenblättern; ergänzende Einordnungen wie Preisklasse oder Design sind kuratiert. Die Quelle steht am Produkt.</p>
+      </div>
+      <div class="row">
+        <h3 data-i18n="s2.r2h">Geprüfte Kompatibilität</h3>
+        <p data-i18n="s2.r2p">Bauart, Rahmenhöhe, Dachtyp und Eindeckung werden gegeneinander geprüft. Fehlen Angaben, gilt eine Kombination als nicht freigegeben – nie umgekehrt.</p>
+      </div>
+      <div class="row">
+        <h3 data-i18n="s2.r3h">Wachsender Katalog</h3>
+        <p data-i18n="s2.r3p">Der Bestand wird laufend erweitert und bei Datenblatt-Änderungen der Hersteller nachgeführt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Band 3: Detail -->
+<figure class="band" aria-hidden="true">
+  <div class="grid" id="band3"></div>
+  <figcaption data-i18n="band3.cap">Detail — Zellstruktur, Nahaufnahme</figcaption>
+</figure>
+
+<!-- ———————————————————————— 03 ———————————————————————— -->
+<section class="tight">
+  <div class="wrap duo">
+    <div>
+      <span class="tag reveal" data-i18n="s3.tag"><i>03</i>Der Ausblick — What's Next</span>
+      <h2 class="reveal" data-i18n="s3.h2">Gebaute Solararchitektur, nachschlagbar.</h2>
+    </div>
+    <div class="prose reveal">
+      <p data-i18n="s3.p1">Als Nächstes entsteht das Referenzverzeichnis: Objekt, eingesetzte Produkte, Fachplanung und Ausführung – direkt kontaktierbar.</p>
+      <p data-i18n="s3.p2">Hersteller führen ihre Produkte im Katalog und halten sie über ein strukturiertes Daten-Template aktuell – <a href="hersteller.html">Produktdaten einreichen</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ———————————————————————— Schluss ———————————————————————— -->
+<div class="fin">
+  <div class="wrap">
+    <h2 class="serif reveal" data-i18n="fin.h2">Ausprobieren, <em>in Ruhe.</em></h2>
+    <a class="cta reveal" href="konfigurator.html" data-i18n="hero.cta">Konfigurator starten</a>
+    <span class="quiet reveal" data-i18n="fin.quiet">Zwei Einstiege, ein Ergebnis.</span>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="foot.l">SunForge Beta · sunforge.ch</span>
+    <span data-i18n="foot.r">Produktdaten aus Hersteller-Datenblättern, Stand siehe Produktdetail.<br>Keine Planungs-, Statik- oder Preisaussage. Massgeblich sind die Unterlagen der Hersteller.</span>
+  </div>
+</footer>
+
+<script>
+/* ---------- Fassaden-Bänder: deterministisch, kein Zufall ---------- */
+(function(){
+  function band(id, cols, rows, hoehe, akzente, breit){
+    var g = document.getElementById(id);
+    if(!g) return;
+    g.style.gridTemplateColumns = 'repeat(' + cols + ',1fr)';
+    g.style.height = hoehe;
+    for (var i = 0; i < cols * rows; i++) {
+      var c = document.createElement('i');
+      var a = akzente[i];
+      if (a) c.style.background = 'var(--' + a + ')';
+      else c.style.background = (i * 7 + Math.floor(i / cols) * 3) % 5 < 3 ? 'var(--glass)' : 'var(--glass2)';
+      if (breit && (i % cols) === breit) c.style.opacity = '.92';
+      g.appendChild(c);
+    }
+  }
+  /* Fassade: hohe schmale Felder, wenige warme Akzente */
+  band('band1', 18, 3, 'clamp(260px,44vh,460px)',
+       {4:'sun-bg', 21:'terra', 29:'moss', 40:'sun-bg', 49:'terra'});
+  /* Dach: liegendes Raster, fast durchgehend Glas */
+  band('band2', 14, 2, 'clamp(180px,30vh,320px)', {9:'sun-bg', 19:'moss'});
+  /* Detail: grobe Zellen */
+  band('band3', 8, 1, 'clamp(140px,22vh,240px)', {5:'terra'});
+})();
+
+/* ---------- Sanftes Erscheinen beim Scrollen ---------- */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(e){e.classList.add('in');}); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: .15 });
+  els.forEach(function(e){ io.observe(e); });
+})();
+
+
+/* ---------- Sprachen: DE ist Quelle, Wahl wird gemerkt ---------- */
+var SF_I18N = {"de": {"nav.konfigurator": "Konfigurator", "nav.hersteller": "Hersteller", "hero.tag": "<i>Beta</i>Solararchitektur — Built to Configure", "hero.h1": "Architektur,<br>die Strom <em>denkt.</em>", "hero.lede": "SunForge führt Architektinnen, Bauherren und Interessierte durch Module und Unterkonstruktionen – mit technischen Werten aus referenzierten Hersteller-Datenblättern und Kompatibilitätsprüfung nach hinterlegten Kriterien – in beide Richtungen.", "hero.cta": "Konfigurator starten", "hero.quiet": "Kostenlos, ohne Anmeldung", "band1.cap": "Fassade — vertikale Teilung, akzentuierte Felder", "band2.cap": "Dachfläche — liegendes Raster, durchgehende Belegung", "band3.cap": "Detail — Zellstruktur, Nahaufnahme", "s1.tag": "<i>01</i>Das Werkzeug — The Tool", "s1.h2": "Zwei Wege, ein stimmiges Ganzes.", "s1.p1": "Vom Produkt her: Design, Leistung, Optik – geführt zum passenden Modul. Oder vom Gebäude her: Dachtyp und Eindeckung bestimmen, welche Systeme freigegeben sind.", "s1.p2": "Prioritäten gewichten statt ausschliessen. Technisch Passendes bleibt sichtbar; die Zusammenfassung zeigt die gewählte Kombination, geprüft nach den hinterlegten Kriterien.", "s2.tag": "<i>02</i>Die Daten — The Data", "s2.h2": "Daten statt Prospekte.", "s2.r1h": "Referenzierte Werte", "s2.r1p": "Technische Produktwerte stammen aus Hersteller-Datenblättern; ergänzende Einordnungen wie Preisklasse oder Design sind kuratiert. Die Quelle steht am Produkt.", "s2.r2h": "Geprüfte Kompatibilität", "s2.r2p": "Bauart, Rahmenhöhe, Dachtyp und Eindeckung werden gegeneinander geprüft. Fehlen Angaben, gilt eine Kombination als nicht freigegeben – nie umgekehrt.", "s2.r3h": "Wachsender Katalog", "s2.r3p": "Der Bestand wird laufend erweitert und bei Datenblatt-Änderungen der Hersteller nachgeführt.", "s3.tag": "<i>03</i>Der Ausblick — What's Next", "s3.h2": "Gebaute Solararchitektur, nachschlagbar.", "s3.p1": "Als Nächstes entsteht das Referenzverzeichnis: Objekt, eingesetzte Produkte, Fachplanung und Ausführung – direkt kontaktierbar.", "s3.p2": "Hersteller führen ihre Produkte im Katalog und halten sie über ein strukturiertes Daten-Template aktuell – <a href=\"hersteller.html\">Produktdaten einreichen</a>.", "fin.h2": "Ausprobieren, <em>in Ruhe.</em>", "fin.quiet": "Zwei Einstiege, ein Ergebnis.", "foot.l": "SunForge Beta · sunforge.ch", "foot.r": "Produktdaten aus Hersteller-Datenblättern, Stand siehe Produktdetail.<br>Keine Planungs-, Statik- oder Preisaussage. Massgeblich sind die Unterlagen der Hersteller."}, "en": {"nav.konfigurator": "Configurator", "nav.hersteller": "Manufacturers", "hero.tag": "<i>Beta</i>Solar Architecture — Built to Configure", "hero.h1": "Architecture<br>that thinks in <em>energy.</em>", "hero.lede": "SunForge guides architects, building owners and the curious through modules and mounting systems – with technical values from referenced manufacturer datasheets and compatibility checked against defined criteria, in both directions.", "hero.cta": "Start the configurator", "hero.quiet": "Free, no sign-up", "band1.cap": "Facade — vertical division, accented panels", "band2.cap": "Roof surface — horizontal grid, continuous coverage", "band3.cap": "Detail — cell structure, close-up", "s1.tag": "<i>01</i>The Tool", "s1.h2": "Two paths, one coherent whole.", "s1.p1": "Start from the product: design, output, appearance – guided to the right module. Or from the building: roof type and covering determine which systems are approved.", "s1.p2": "Weight your priorities instead of excluding options. Technically suitable products stay visible; the summary shows your combination, checked against the defined criteria.", "s2.tag": "<i>02</i>The Data", "s2.h2": "Data, not brochures.", "s2.r1h": "Referenced values", "s2.r1p": "Technical product values come from manufacturer datasheets; complementary ratings such as price class or design are curated. The source is stated on every product.", "s2.r2h": "Verified compatibility", "s2.r2p": "Mounting type, frame height, roof type and covering are checked against each other. Where data is missing, a combination counts as not approved – never the other way round.", "s2.r3h": "A growing catalogue", "s2.r3p": "The catalogue is continuously extended and updated when manufacturers revise their datasheets.", "s3.tag": "<i>03</i>What's Next", "s3.h2": "Built solar architecture, on record.", "s3.p1": "Next up: the reference directory – building, products used, engineering and execution, each directly contactable.", "s3.p2": "Manufacturers list their products in the catalogue and keep them current via a structured data template – <a href=\"hersteller.html\">submit product data</a>.", "fin.h2": "Try it, <em>at your own pace.</em>", "fin.quiet": "Two paths, one result.", "foot.l": "SunForge Beta · sunforge.ch", "foot.r": "Product data from manufacturer datasheets; see product detail for version.<br>No planning, structural or pricing statement. The manufacturers' documents prevail."}, "fr": {"nav.konfigurator": "Configurateur", "nav.hersteller": "Fabricants", "hero.tag": "<i>Bêta</i>Architecture solaire — Built to Configure", "hero.h1": "L'architecture<br>qui pense en <em>énergie.</em>", "hero.lede": "SunForge guide architectes, maîtres d'ouvrage et curieux à travers modules et systèmes de montage – avec des valeurs techniques issues des fiches fabricants référencées et une compatibilité vérifiée selon des critères définis, dans les deux sens.", "hero.cta": "Lancer le configurateur", "hero.quiet": "Gratuit, sans inscription", "band1.cap": "Façade — division verticale, panneaux accentués", "band2.cap": "Toiture — trame horizontale, couverture continue", "band3.cap": "Détail — structure cellulaire, gros plan", "s1.tag": "<i>01</i>L'outil — The Tool", "s1.h2": "Deux chemins, un ensemble cohérent.", "s1.p1": "Depuis le produit : design, puissance, esthétique – guidé vers le module adapté. Ou depuis le bâtiment : type de toiture et couverture déterminent les systèmes homologués.", "s1.p2": "Pondérer les priorités au lieu d'exclure. Ce qui convient techniquement reste visible ; la synthèse présente la combinaison choisie, vérifiée selon les critères définis.", "s2.tag": "<i>02</i>Les données — The Data", "s2.h2": "Des données, pas des prospectus.", "s2.r1h": "Valeurs référencées", "s2.r1p": "Les valeurs techniques proviennent des fiches fabricants ; les appréciations complémentaires comme la classe de prix ou le design sont éditorialisées. La source figure sur chaque produit.", "s2.r2h": "Compatibilité vérifiée", "s2.r2p": "Type de montage, hauteur de cadre, toiture et couverture sont vérifiés entre eux. En l'absence de données, une combinaison est réputée non homologuée – jamais l'inverse.", "s2.r3h": "Un catalogue qui grandit", "s2.r3p": "Le catalogue est étendu en continu et mis à jour lorsque les fabricants révisent leurs fiches techniques.", "s3.tag": "<i>03</i>La suite — What's Next", "s3.h2": "L'architecture solaire construite, consultable.", "s3.p1": "Prochaine étape : le répertoire de références – ouvrage, produits mis en œuvre, ingénierie et exécution, chacun directement joignable.", "s3.p2": "Les fabricants référencent leurs produits et les tiennent à jour via un modèle de données structuré – <a href=\"hersteller.html\">soumettre des données produit</a>.", "fin.h2": "Essayer, <em>en toute sérénité.</em>", "fin.quiet": "Deux chemins, un résultat.", "foot.l": "SunForge Bêta · sunforge.ch", "foot.r": "Données produit issues des fiches fabricants, version : voir le détail produit.<br>Aucune déclaration de planification, de statique ou de prix. Les documents des fabricants font foi."}, "it": {"nav.konfigurator": "Configuratore", "nav.hersteller": "Produttori", "hero.tag": "<i>Beta</i>Architettura solare — Built to Configure", "hero.h1": "L'architettura<br>che pensa in <em>energia.</em>", "hero.lede": "SunForge guida architetti, committenti e interessati tra moduli e sistemi di montaggio – con valori tecnici tratti dalle schede dei produttori referenziate e compatibilità verificata secondo criteri definiti, in entrambe le direzioni.", "hero.cta": "Avvia il configuratore", "hero.quiet": "Gratuito, senza registrazione", "band1.cap": "Facciata — partizione verticale, campi accentuati", "band2.cap": "Copertura — griglia orizzontale, posa continua", "band3.cap": "Dettaglio — struttura delle celle, primo piano", "s1.tag": "<i>01</i>Lo strumento — The Tool", "s1.h2": "Due percorsi, un insieme coerente.", "s1.p1": "Dal prodotto: design, potenza, estetica – guidati verso il modulo adatto. O dall'edificio: tipo di tetto e copertura determinano i sistemi omologati.", "s1.p2": "Ponderare le priorità invece di escludere. Ciò che è tecnicamente idoneo resta visibile; il riepilogo mostra la combinazione scelta, verificata secondo i criteri definiti.", "s2.tag": "<i>02</i>I dati — The Data", "s2.h2": "Dati, non prospetti.", "s2.r1h": "Valori referenziati", "s2.r1p": "I valori tecnici provengono dalle schede dei produttori; le valutazioni complementari come classe di prezzo o design sono curate dalla redazione. La fonte è indicata su ogni prodotto.", "s2.r2h": "Compatibilità verificata", "s2.r2p": "Tipo di montaggio, altezza del telaio, tetto e copertura vengono verificati tra loro. In mancanza di dati, una combinazione è considerata non omologata – mai il contrario.", "s2.r3h": "Un catalogo in crescita", "s2.r3p": "Il catalogo viene ampliato costantemente e aggiornato quando i produttori rivedono le loro schede tecniche.", "s3.tag": "<i>03</i>Prossimi passi — What's Next", "s3.h2": "Architettura solare costruita, consultabile.", "s3.p1": "Prossimo passo: il repertorio delle referenze – edificio, prodotti impiegati, progettazione ed esecuzione, ognuno contattabile direttamente.", "s3.p2": "I produttori inseriscono i loro prodotti nel catalogo e li tengono aggiornati tramite un modello dati strutturato – <a href=\"hersteller.html\">inviare dati prodotto</a>.", "fin.h2": "Provare, <em>con calma.</em>", "fin.quiet": "Due percorsi, un risultato.", "foot.l": "SunForge Beta · sunforge.ch", "foot.r": "Dati prodotto dalle schede dei produttori, versione: vedi dettaglio prodotto.<br>Nessuna indicazione di progettazione, statica o prezzo. Fanno fede i documenti dei produttori."}};
+(function(){
+  var sel = document.getElementById('langSel');
+  var lang = null;
+  try { lang = localStorage.getItem('sf-lang'); } catch(e) {}
+  if (!SF_I18N[lang]) {
+    var nav = (navigator.language || 'de').slice(0,2).toLowerCase();
+    lang = SF_I18N[nav] ? nav : 'de';
+  }
+  function apply(l){
+    document.documentElement.lang = l;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var t = SF_I18N[l][el.dataset.i18n];
+      if (t) el.innerHTML = t;
+    });
+    if (sel) sel.value = l;
+  }
+  if (sel) sel.addEventListener('change', function(){
+    try { localStorage.setItem('sf-lang', sel.value); } catch(e) {}
+    apply(sel.value);
+  });
+  apply(lang);
+})();
+
+/* ---------- Hell/Dunkel: Standard = Systemeinstellung, Umschalter merkt die Wahl ---------- */
+(function(){
+  const root = document.documentElement, btn = document.getElementById('themeBtn');
+  const mq = window.matchMedia('(prefers-color-scheme: light)');
+  function istDunkel(){
+    return root.dataset.theme ? root.dataset.theme === 'dark' : !mq.matches;
+  }
+  function beschrifte(){
+    if(!btn) return;
+    btn.textContent = istDunkel() ? '☀' : '☾';
+    btn.setAttribute('aria-label', istDunkel() ? 'Helles Design aktivieren' : 'Dunkles Design aktivieren');
+  }
+  if(btn) btn.addEventListener('click', function(){
+    const neu = istDunkel() ? 'light' : 'dark';
+    root.dataset.theme = neu;
+    try { localStorage.setItem('sf-theme', neu); } catch(e) {}
+    beschrifte();
+  });
+  if (mq.addEventListener) mq.addEventListener('change', beschrifte);
+  beschrifte();
+})();
+</script>
+</body>
+</html>
